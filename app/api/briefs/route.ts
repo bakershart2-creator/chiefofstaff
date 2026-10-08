@@ -28,3 +28,8 @@ export async function POST(req: NextRequest) {
   const origin = new URL(req.url).origin;
   return NextResponse.json({ id: brief.id, url: `${origin}/b/${brief.id}`, latestUrl: `${origin}/` });
 }
+
+// Browsers visit with GET; this endpoint only accepts POST from the COS agent.
+export async function GET() {
+  return NextResponse.json({ error: "POST only. Briefs are viewed at /" }, { status: 405, headers: { Allow: "POST" } });
+}

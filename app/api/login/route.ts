@@ -14,3 +14,8 @@ export async function POST(req: NextRequest) {
   res.cookies.set(COOKIE, await makeToken(), { httpOnly: true, secure: true, sameSite: "lax", maxAge: cookieMaxAge, path: "/" });
   return res;
 }
+
+// Opening /api/login in a browser is a GET; send people to the real login page.
+export async function GET(req: NextRequest) {
+  return NextResponse.redirect(new URL("/login", req.url), 303);
+}
